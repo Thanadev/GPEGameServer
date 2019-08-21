@@ -9,6 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RoomController extends AbstractController
 {
+    const RESPONSE_OK = 'ok';
+
     /**
      * @Route("/room", name="room")
      * @param Request $request
@@ -17,12 +19,15 @@ class RoomController extends AbstractController
      */
     public function index(Request $request, RoomService $roomService)
     {
-        $roomService->createRoom();
-        $request->query->get('name');
+        $gamemode = $request->query->get('gamemode');
+
+        $room = $roomService->createRoom($gamemode);
+
+        $roomStatus = static::RESPONSE_OK;
 
         return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/RoomController.php',
+            'status' => $roomStatus,
+            'port' => $room->getPort(),
         ]);
     }
 }
