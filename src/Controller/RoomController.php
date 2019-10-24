@@ -7,6 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class RoomController
+ * @package App\Controller
+ */
 class RoomController extends AbstractController
 {
     const RESPONSE_OK = 'ok';
