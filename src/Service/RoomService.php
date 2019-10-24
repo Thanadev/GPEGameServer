@@ -2,10 +2,13 @@
 
 namespace App\Service;
 
-
 use App\Entity\RoomEntity;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * Class RoomService
+ * @package App\Service
+ */
 class RoomService
 {
     protected $em;
@@ -15,17 +18,34 @@ class RoomService
         $this->em = $em;
     }
 
+    /**
+     * @param string $gameMode
+     * @return RoomEntity|null
+     */
     public function assignPlayerToRoom($gameMode)
     {
         // TODO
         // Check if a room is available for its gameMode
         $rooms = $this->em->getRepository('App:RoomEntity')->findBy(array('gameMode' => $gameMode));
+        $room = null;
+
+        if (empty($rooms)) {
+            $room = $this->createRoom($gameMode);
+        } else {
+            $room = $rooms[0];
+        }
+
+        return $room;
     }
 
+    /**
+     * @param string $gameMode
+     * @return RoomEntity
+     */
     public function createRoom($gameMode)
     {
-        //$port = $this->getFreePort();
-        $port = 15937;
+        $port = $this->getFreePort();
+        //$port = 15937;
         $maxPlayerBySession = intval($_ENV['MAX_PLAYER_NB']);
 
 

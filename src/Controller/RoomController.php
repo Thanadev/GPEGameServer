@@ -21,7 +21,7 @@ class RoomController extends AbstractController
     {
         $gamemode = $request->query->get('gamemode');
 
-        $room = $roomService->createRoom($gamemode);
+        $room = $roomService->assignPlayerToRoom($gamemode);
 
         $roomStatus = static::RESPONSE_OK;
 
